@@ -63,5 +63,19 @@ $response = $client->makeRequest('http://example.com', 'POST', $postData);
 
 ### Setting the request header
 
-// TODO
+An array of request header attributes can be passed into `makeRequest`.
+
+```php
+$requestHeader = array(
+    'Content-type: application/json',
+    'Accept: application/json',
+);
+$postData = array(
+    'foo' => 'bar',
+    'bah' => 'bat',
+    'blue' => 'yellow',
+);
+$client = new SimpleHTTPClient();
+$response = $client->makeRequest('http://example.com', 'POST', json_encode($postData), $requestHeader);
+```
 
