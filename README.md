@@ -3,8 +3,10 @@ SimpleHTTPClient
 
 A simple abstraction layer for making HTTP requests via PHP.
 
+
 ## Usage
 
+### Simple GET
 Let's begin with a basic example.  
 
 ```php
@@ -33,6 +35,33 @@ Array (
 )
 ```
 
-To determine whether a request returned a successful response or to handle different HTTP error codes simply test the value of `$response['status']['statusCode']`.  To understand the intended content type of the body simply test the value of `$response['header']['Content-type']`.  To work with the response body simply use `$response['body']`.  That was easy, wasn't it?
+To determine whether a request returned a successful response or to handle different HTTP error codes simply test the value of `$response['status']['statusCode']`.  To understand the intended content type of the body simply test the value of `$response['header']['Content-type']`.  To work with the response body simply use `$response['body']`.
 
+
+### Simple POST
+
+Making POST requests is trivial too.
+
+```php
+$client = new SimpleHTTPClient();
+$response = $client->makeRequest('http://example.com', 'POST', null, 'foo=bar&bah=bat&blue=yellow');
+```
+
+The example above shows that we can pass the POST body as a string.  We can also pass an associative array of parameters with a POST request.
+
+```php
+$postData = array(
+    'foo' => 'bar',
+    'bah' => 'bat',
+    'blue' => 'yellow',
+);
+...
+$client = new SimpleHTTPClient();
+$response = $client->makeRequest('http://example.com', 'POST', null, $postData);
+```
+
+
+### Setting the request header
+
+// TODO
 
