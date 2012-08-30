@@ -1,7 +1,7 @@
 SimpleHTTPClient
 ==========
 
-A simple abstraction layer for making HTTP requests via PHP.
+A simple abstraction for making HTTP requests via PHP.
 
 
 ## Usage
@@ -44,7 +44,7 @@ Making POST requests is trivial too.
 
 ```php
 $client = new SimpleHTTPClient();
-$response = $client->makeRequest('http://example.com', 'POST', null, 'foo=bar&bah=bat&blue=yellow');
+$response = $client->makeRequest('http://example.com', 'POST', 'foo=bar&bah=bat&blue=yellow');
 ```
 
 The example above shows that we can pass the POST body as a string.  We can also pass an associative array of parameters with a POST request.
@@ -57,7 +57,7 @@ $postData = array(
 );
 ...
 $client = new SimpleHTTPClient();
-$response = $client->makeRequest('http://example.com', 'POST', null, $postData);
+$response = $client->makeRequest('http://example.com', 'POST', $postData);
 ```
 
 

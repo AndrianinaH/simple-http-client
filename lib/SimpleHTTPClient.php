@@ -34,7 +34,7 @@ class SimpleHTTPClient {
      * @param String $requestBody: The striing literal containing request body data (eg. POST params go here).
      * @return Array: Associative array containing response header and body as 'header' and 'body' keys.
      */
-    function makeRequest($url, $requestMethod, $requestHeader = null, $requestBody = null) {
+    function makeRequest($url, $requestMethod, $requestBody = null, $requestHeader = null) {
         // Reinitialize response header and body.
         $this->responseHeader = null;
         $this->responseBody = null;
