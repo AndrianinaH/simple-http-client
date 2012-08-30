@@ -12,23 +12,27 @@ $client = new SimpleHTTPClient();
 $response = $client->makeRequest('http://example.com', 'GET');
 ```
 
-The `SimpleHTTPClient` class exposes a public method named `makeRequest` which takes a URL, an HTTP request method, an HTTP request header string (optional), and an HTTP request body string (optional).  The method returns an associative array containing the HTTP response status, header, and body.  The example above initializes an instance of `SimpleHTTPClient` and makes a basic HTTP GET request, storing the response in `$response`.
+The `SimpleHTTPClient` class exposes a public method named `makeRequest` which takes a URL, an HTTP request method, a request header string (optional), and a request body string (optional).  The method returns an associative array containing the HTTP response status, header, and body.  The example above initializes an instance of `SimpleHTTPClient` and makes a basic HTTP GET request, storing the response in `$response`.
 
-The basic response is structured like this:
+The response array is structured like this:
 
 ```
 Array (
     [status] => Array (
-            [protocolVersion] => 1.1
-            [statusCode] => 200
-            [reasonPhrase] => OK
-        )
+        [protocolVersion] => 1.1
+        [statusCode] => 200
+        [reasonPhrase] => OK
+    )
 
     [header] => Array (
-            [Content-type] => text/plain
-            [Transfer-Encoding] => chunked
-        )
+        [Content-type] => text/plain
+        [Transfer-Encoding] => chunked
+    )
 
     [body] => <html><head><title>Example Page</title></head><body>An example page body</body></html>
 )
 ```
+
+To determine whether a request returned a successful response or to handle different HTTP error codes simply test the value of `$response['status']['statusCode']`.  To understand the intended content type of the body simply test the value of `$response['header']['Content-type']`.  To work with the response body simply use `$response['body']`.  That was easy, wasn't it?
+
+
