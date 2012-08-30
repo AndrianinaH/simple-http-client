@@ -7,8 +7,8 @@ h2. Usage
 
 Let's begin with a basic example.
 
-    ```php
-    $client = new SimpleHTTPClient();
-    $response = $client->makeRequest('http://example.com', 'GET');
-    ```
+```php
+$client = new SimpleHTTPClient();
+$response = $client->makeRequest('http://example.com', 'GET');
+```
 
