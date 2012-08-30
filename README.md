@@ -1,4 +1,4 @@
 SimpleHTTP
 ==========
 
-A simple abstraction layer for making and handling HTTP requests via PHP.
+A simple abstraction layer for making HTTP requests via PHP.
