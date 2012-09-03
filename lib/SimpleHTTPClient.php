@@ -4,7 +4,6 @@
  * 
  * @author ekillaby
  */
-// TODO: This does not yet handle file uploads; it would be to support multipart file uploads.
 class SimpleHTTPClient {
     /**
      * HTTP response status; will contain associative array representing
