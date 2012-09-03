@@ -76,8 +76,7 @@ class SimpleHTTPClient {
      * @param String $headerData: The header to handle; expects header to come in one line at a time.
      * @return Int: The length of the input data.
      */
-    // TODO: Clean this method up a bit.
-    function handleResponseHeader($ch, $headerData) {
+    private function handleResponseHeader($ch, $headerData) {
         // If we haven't found the HTTP status yet, then try to match it.
         if ($this->responseStatus == null) {
             $regex = '/^\s*HTTP\s*\/\s*(?P<protocolVersion>\d*\.\d*)\s*(?P<statusCode>\d*)\s(?P<reasonPhrase>.*)\r\n/';
@@ -111,7 +110,7 @@ class SimpleHTTPClient {
      * @param String $bodyData: The body data to handle.
      * @param Int: The length of the input data.
      */
-    function handleResponseBody($ch, $bodyData) {
+    private function handleResponseBody($ch, $bodyData) {
         $this->responseBody .= $bodyData;
 
         return strlen($bodyData);
