@@ -2,7 +2,6 @@
 /**
  * Class for simplifying HTTP requests.
  * 
- * @author ekillaby
  */
 class SimpleHTTPClient {
     /**
