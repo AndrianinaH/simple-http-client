@@ -1,6 +1,6 @@
 <?php
 /**
- * Class for simplifying HTTP requests.
+ * Class for simplifying HTTP requests by wrapping cURL workflow.
  * 
  */
 class SimpleHTTPClient {
