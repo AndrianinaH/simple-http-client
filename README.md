@@ -79,3 +79,6 @@ $client = new SimpleHTTPClient();
 $response = $client->makeRequest('http://example.com', 'POST', json_encode($postData), $requestHeader);
 ```
 
+
+## License
+SimpleHTTPClient is made available to the public as open source software under the [MIT License](http://opensource.org/licenses/MIT).
