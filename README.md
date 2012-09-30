@@ -43,7 +43,6 @@ To determine whether a request returned a successful response or to handle diffe
 Making POST requests is trivial too.
 
 ```php
-$client = new SimpleHTTPClient();
 $response = $client->makeRequest('http://example.com', 'POST', 'foo=bar&bah=bat&blue=yellow');
 ```
 
@@ -55,13 +54,12 @@ $postData = array(
     'bah' => 'bat',
     'blue' => 'yellow',
 );
-...
-$client = new SimpleHTTPClient();
+
 $response = $client->makeRequest('http://example.com', 'POST', $postData);
 ```
 
 
-### Setting the request header
+### Specifying request header attributes
 
 An array of request header attributes can be passed into `makeRequest`.
 
@@ -75,10 +73,19 @@ $postData = array(
     'bah' => 'bat',
     'blue' => 'yellow',
 );
-$client = new SimpleHTTPClient();
+
 $response = $client->makeRequest('http://example.com', 'POST', json_encode($postData), $requestHeader);
 ```
 
+To define header attributes on a request with an empty request body simply pass null for the third parameter to `makeRequest`.
+
+```php
+$requestHeader = array(
+    'Accept: application/json',
+);
+
+$response = $client->makeRequest('http://example.com', 'GET', null, $requestHeader);
+```
 
 ## License
 SimpleHTTPClient is made available to the public as open source software under the [MIT License](http://opensource.org/licenses/MIT).
