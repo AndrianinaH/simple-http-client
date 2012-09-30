@@ -77,7 +77,7 @@ $postData = array(
 $response = $client->makeRequest('http://example.com', 'POST', json_encode($postData), $requestHeader);
 ```
 
-To define header attributes on a request with an empty request body simply pass null for the third parameter to `makeRequest`.
+To define header attributes on a request with an empty request body simply pass `null` for the third parameter to `makeRequest`.
 
 ```php
 $requestHeader = array(
