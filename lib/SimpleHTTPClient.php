@@ -20,15 +20,18 @@ class SimpleHTTPClient {
     private $responseBody = null;
 
     // List of valid HTTP methods.
+    // TODO: Perhaps we should set required structure for
+    //       each of the HTTP methods for validation of the
+    //       incoming request.
     private $httpMethods = array(
-        'OPTIONS',
-        'GET',
-        'HEAD',
-        'POST',
-        'PUT',
-        'DELETE',
-        'TRACE',
-        'CONNECT',
+        'OPTIONS' => true,
+        'GET' => true,
+        'HEAD' => true,
+        'POST' => true,
+        'PUT' => true,
+        'DELETE' => true,
+        'TRACE' => true,
+        'CONNECT' => true,
     );
 
     /**
@@ -81,7 +84,7 @@ class SimpleHTTPClient {
         //       the HTTP standard.
         // 
         // http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html
-        if (!in_array($request['request']['method'], $this->httpMethods)) {
+        if (!isset($this->httpMethods[$request['request']['method']])) {
             throw new Exception('Unsupported HTTP method specified.');
         }
 
