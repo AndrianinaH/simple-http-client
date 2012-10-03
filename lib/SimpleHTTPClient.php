@@ -1,60 +1,111 @@
 <?php
 /**
- * Class for simplifying HTTP requests by wrapping cURL workflow.
- * 
+ * Class for simplifying HTTP requests by wrapping cURL
+ * workflow.  The goal is to provide simpler, more direct
+ * control over HTTP requests and responses.
  */
 class SimpleHTTPClient {
-    /**
-     * HTTP response status; will contain associative array representing
-     * the HTTP version, status code, and reason phrase.
-     */
+    // HTTP response status; will contain associative array
+    // representing the HTTP version, status code, and
+    // reason phrase.
     private $responseStatus = null;
 
-    /**
-     * HTTP response header; will contain associative array of header
-     * attributes returned from the cURL request.
-     */
+    // HTTP response header; will contain associative array
+    // of header attributes returned from the cURL request.
     private $responseHeader = null;
 
-    /**
-     * HTTP response body; will contain a string representing the body
-     * of the response returned from the cURL request.
-     */
+    // HTTP response body; will contain string representing
+    // the body of the response returned from the cURL
+    // request.
     private $responseBody = null;
 
+    // List of valid HTTP methods.
+    private $httpMethods = array(
+        'OPTIONS',
+        'GET',
+        'HEAD',
+        'POST',
+        'PUT',
+        'DELETE',
+        'TRACE',
+        'CONNECT',
+    );
+
     /**
-     * Make an HTTP request.  Defaults to a simple GET request if only
-     * the $url parameter is specified.  Returns the complete response
-     * header and body in a PHP-friendly data structure.
+     * Make an HTTP request.  Defaults to a simple GET
+     * request if only the $url parameter is specified.
+     * Returns the complete response header and body in a
+     * PHP-friendly data structure.
      * 
      * @param String $url: A complete URL including URL parameters.
      * @param String $requestMethod: The HTTP request method to use for this request.
      * @param String $requestBody: The striing literal containing request body data (eg. POST params go here).
-     * @return Array: Associative array containing response header and body as 'header' and 'body' keys.
+     * @return Array: Array containing response header and body as 'header' and 'body' keys.
      */
-    function makeRequest($url, $requestMethod, $requestBody = null, $requestHeader = null) {
+    public function makeRequest(
+        $url,
+        $requestMethod = 'GET',
+        $requestBody = null,
+        $requestHeader = null) {
+
+        try {
+            // Make request and return response.
+            return $this->httpRequest(array(
+                'request' => array(
+                    'method' => $requestMethod,
+                    'url' => $url,
+                ),
+                'header' => $requestHeader,
+                'body' => $requestBody,
+            ));
+        } catch (Exception $e) {
+            // Caught exception; return error message.
+            return array('error' => $e->getMessage());
+        }
+    }
+
+    /**
+     * 
+     */
+    public function httpRequest($request) {
+        // Validate request details.
+        if (!isset($request['request'])
+            || !isset($request['request']['method'])
+            || !isset($request['request']['url'])) {
+
+            throw new Exception('HTTP request not fully defined.');
+        }
+
+        // TODO: Support DELETE and PUT and POST and GET requests
+        //       as well as other HTTP request methods defined in
+        //       the HTTP standard.
+        // 
+        // http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html
+        if (!in_array($request['request']['method'], $this->httpMethods)) {
+            throw new Exception('Unsupported HTTP method specified.');
+        }
+
         // Reinitialize response header and body.
         $this->responseHeader = null;
         $this->responseBody = null;
 
+        // Set up cURL handler.
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        if ($requestHeader !== null) {
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $requestHeader);
-        }
+        curl_setopt($ch, CURLOPT_URL, $request['request']['url']);
         curl_setopt($ch, CURLOPT_HEADERFUNCTION, array($this, 'handleResponseHeader'));
         curl_setopt($ch, CURLOPT_WRITEFUNCTION, array($this, 'handleResponseBody'));
-
-        // Additional options need to be set for PUT and POST requests.
-        if ($requestMethod == 'POST') {
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $requestBody);
-        } else if ($requestMethod == 'PUT') {
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $requestBody);
+        if ($request['header'] !== null) {
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $request['header']);
         }
 
-        // Execute and close the request and close the connection
+        // TODO: does CURLOPT_CUSTOMREQUEST work for all HTTP methods?
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $request['request']['method']);
+
+        if (isset($request['body'])) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $request['body']);
+        }
+
+        // Execute the request and close the connection
         // handler as quickly as possible.
         $response = curl_exec($ch);
         curl_close($ch);
@@ -67,8 +118,9 @@ class SimpleHTTPClient {
     }
 
     /**
-     * Process an incoming response header following a cURL request and
-     * store the header in $this->responseHeader.
+     * Process an incoming response header following a
+     * cURL request and store the header in
+     * $this->responseHeader.
      * 
      * @param Object $ch: The cURL handler instance.
      * @param String $headerData: The header to handle; expects header to come in one line at a time.
@@ -101,8 +153,8 @@ class SimpleHTTPClient {
     }
 
     /**
-     * Process an incoming response body following a cURL request
-     * and store the body in $this->responseBody.
+     * Process an incoming response body following a cURL
+     * request and store the body in $this->responseBody.
      * 
      * @param Object $ch: The cURL handler instance.
      * @param String $bodyData: The body data to handle.
