@@ -42,7 +42,7 @@ class SimpleHTTPClient {
      * 
      * @param String $url: A complete URL including URL parameters.
      * @param String $requestMethod: The HTTP request method to use for this request.
-     * @param String $requestBody: The striing literal containing request body data (eg. POST params go here).
+     * @param String $requestBody: The string literal containing request body data (eg. POST params go here).
      * @return Array: Array containing response header and body as 'header' and 'body' keys.
      */
     public function makeRequest(
@@ -81,9 +81,10 @@ class SimpleHTTPClient {
 
         // TODO: Support DELETE and PUT and POST and GET requests
         //       as well as other HTTP request methods defined in
-        //       the HTTP standard.
+        //       the HTTP standard.  Need to test to determine what
+        //       isn't working yet.  HEAD may not work currently.
         // 
-        // http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html
+        //       http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html
         if (!isset($this->httpMethods[$request['request']['method']])) {
             throw new Exception('Unsupported HTTP method specified.');
         }
