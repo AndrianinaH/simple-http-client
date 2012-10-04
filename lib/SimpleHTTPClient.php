@@ -109,14 +109,18 @@ class SimpleHTTPClient {
         }
 
         // Execute the request and close the connection
-        // handler as quickly as possible.
-        $response = curl_exec($ch);
+        // handler as quickly as possible, recording how
+        // long the request takes.
+        $timeStart = microtime(true);
+        curl_exec($ch);
         curl_close($ch);
+        $timeDelta = microtime(true) - $timeStart;
 
         return array(
             'status' => $this->responseStatus,
             'header' => $this->responseHeader,
             'body' => $this->responseBody,
+            'time' => $timeDelta,
         );
     }
 
