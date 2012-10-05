@@ -34,6 +34,18 @@ class SimpleHTTPClient {
         'CONNECT' => true,
     );
 
+    // Set a log file path in order to turn on logging; set
+    // it to null to turn logging off.
+    private $logPath = null;
+
+    /**
+     * @param String $logPath: File path to log requests and responses to.
+     * @param Bool: Success/failure in setting the log path instance variable.
+     */
+    public function setLogPath($logPath) {
+        return $this->logPath = $logPath;
+    }
+
     /**
      * Make an HTTP request.  Defaults to a simple GET
      * request if only the $url parameter is specified.
@@ -109,6 +121,13 @@ class SimpleHTTPClient {
             curl_setopt($ch, CURLOPT_POSTFIELDS, $request['body']);
         }
 
+        // Log the request.
+        if ($this->logPath !== null) {
+            $fh = fopen($this->logPath, 'a');
+            fwrite($fh, 'Request: '.print_r($request, true)."\n");
+            fclose($fh);
+        }
+
         // Execute the request and close the connection
         // handler as quickly as possible, recording how
         // long the request takes.
@@ -117,12 +136,22 @@ class SimpleHTTPClient {
         curl_close($ch);
         $timeDelta = microtime(true) - $timeStart;
 
-        return array(
+        // Bring the response parts together.
+        $response = array(
             'status' => $this->responseStatus,
             'header' => $this->responseHeader,
             'body' => $this->responseBody,
             'time' => $timeDelta,
         );
+
+        // Log the response.
+        if ($this->logPath !== null) {
+            $fh = fopen($this->logPath, 'a');
+            fwrite($fh, 'Response: '.print_r($response, true)."\n\n\n");
+            fclose($fh);
+        }
+
+        return $response;
     }
 
     /**
