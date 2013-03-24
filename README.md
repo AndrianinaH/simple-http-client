@@ -1,4 +1,5 @@
-h1. SimpleHTTPClient
+SimpleHTTPClient
+========
 
 A simple abstraction for making HTTP requests via PHP.
 
@@ -86,6 +87,7 @@ $requestHeader = array(
 $response = $client->makeRequest('http://example.com', 'GET', null, $requestHeader);
 ```
 
-h1. License
+License
+========
 
 SimpleHTTPClient is made available to the public as open source software under the [MIT License](http://opensource.org/licenses/MIT).
