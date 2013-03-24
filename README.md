@@ -1,5 +1,4 @@
-SimpleHTTPClient
-==========
+h1. SimpleHTTPClient
 
 A simple abstraction for making HTTP requests via PHP.
 
@@ -7,7 +6,7 @@ A simple abstraction for making HTTP requests via PHP.
 ## Usage
 
 ### Simple GET
-Let's begin with a basic example.  
+A basic example.  
 
 ```php
 $client = new SimpleHTTPClient();
@@ -86,6 +85,3 @@ $requestHeader = array(
 
 $response = $client->makeRequest('http://example.com', 'GET', null, $requestHeader);
 ```
-
-## License
-SimpleHTTPClient is made available to the public as open source software under the [MIT License](http://opensource.org/licenses/MIT).
