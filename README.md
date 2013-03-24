@@ -1,7 +1,7 @@
 SimpleHTTPClient
 ========
 
-A simple abstraction for making HTTP requests via PHP.
+Make simple HTTP requests from PHP.
 
 
 ## Usage
