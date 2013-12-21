@@ -37,8 +37,8 @@ Array (
 To determine whether a request returned a successful response or to handle different HTTP error codes simply test the value of `$response['status']['statusCode']`.  To understand the intended content type of the body simply test the value of `$response['header']['Content-type']`.  To work with the response body simply use `$response['body']`.
 
 
-### POST
-Making POST requests is trivial too.
+### POST / PUT
+Making POST and PUT requests is trivial too.
 
 ```php
 $response = $client->makeRequest('http://example.com', 'POST', 'foo=bar&bah=bat&blue=yellow');
@@ -57,7 +57,16 @@ $response = $client->makeRequest('http://example.com', 'POST', $postData);
 ```
 
 
-### Specifying request header attributes
+### DELETE
+DELETE requests are shaped the same way GET requests are shaped.
+
+```php
+$client = new SimpleHTTPClient();
+$response = $client->makeRequest('http://example.com', 'DELETE');
+```
+
+
+### Specify header attributes for a request
 
 An array of request header attributes can be passed into `makeRequest`.
 
@@ -84,6 +93,7 @@ $requestHeader = array(
 
 $response = $client->makeRequest('http://example.com', 'GET', null, $requestHeader);
 ```
+
 Simple.
 
 ## License
