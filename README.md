@@ -87,7 +87,6 @@ $requestHeader = array(
 $response = $client->makeRequest('http://example.com', 'GET', null, $requestHeader);
 ```
 
-License
-========
+## License
 
 This repository is made available to the public as open source software under the [MIT License](http://opensource.org/licenses/MIT).
