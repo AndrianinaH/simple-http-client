@@ -1,13 +1,12 @@
-SimpleHTTPClient
-========
+# simple-http-client
 
 Make simple HTTP requests from PHP.
 
 
-## Usage
+## Example usage
 
-### Simple GET
-A basic example.  
+### GET
+Making GET requests is easy and minimal.  
 
 ```php
 $client = new SimpleHTTPClient();
@@ -38,8 +37,7 @@ Array (
 To determine whether a request returned a successful response or to handle different HTTP error codes simply test the value of `$response['status']['statusCode']`.  To understand the intended content type of the body simply test the value of `$response['header']['Content-type']`.  To work with the response body simply use `$response['body']`.
 
 
-### Simple POST
-
+### POST
 Making POST requests is trivial too.
 
 ```php
@@ -86,6 +84,7 @@ $requestHeader = array(
 
 $response = $client->makeRequest('http://example.com', 'GET', null, $requestHeader);
 ```
+Simple.
 
 ## License
 
